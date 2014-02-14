@@ -47,7 +47,8 @@
         "sylvester": "latest",
         "numjs": "latest",
         "pm2": "latest",
-        "agenda": "latest"
+        "agenda": "latest",
+        "pm2-web": "latest"
     },
     "devDependencies": {
         "supertest": "latest",

@@ -13,10 +13,13 @@ apt-get install -y mongodb-10gen
 
 su vagrant -c "cd ~; git clone http://github.com/nwoodbury/tdf.git"
 su vagrant -c "cd ~/tdf; npm install"
+crontab tickercron3000
 
-cat >/etc/init/tdf.conf <<EOF
-description "Tour De Finance"
-author      "IDeA Labs 2013"
+NODE_ENV=production PORT=3000 /home/vagrant/tdf/node_modules/pm2/bin/pm2 start server.js -i max
+
+cat >/etc/init/tdf-pm2-web.conf <<EOF
+description "Tour De Finance - Web Monitor"
+author      "IDeA Labs 2014"
 
 start on started mountall
 stop on shutdown
@@ -27,8 +30,7 @@ respawn limit 99 5
 setuid vagrant
 
 script
-    cd /home/vagrant/tdf
-    exec /usr/bin/grunt
+    exec /home/vagrant/tdf/node_modules/pm2-web/bin/pm2-web.sh
 end script
 EOF
 
